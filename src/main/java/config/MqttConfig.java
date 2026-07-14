@@ -19,7 +19,7 @@ public class MqttConfig {
     @Bean
     public MqttConnectOptions mqttConnectOptions() {
         MqttConnectOptions options = new MqttConnectOptions();
-        options.setServerURIs(new String[]{"tcp://broker.emqx.io:1883"});
+        options.setServerURIs(new String[]{"tcp://localhost:1883"});
         options.setUserName("public");
         options.setPassword("public".toCharArray());
         options.setCleanSession(true);
