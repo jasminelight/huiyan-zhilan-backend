@@ -16,9 +16,15 @@ public class MonitoringController {
     @Autowired
     private MonitoringDataMapper monitoringDataMapper;
 
-    // 查询最新一条数据（给大屏实时展示用）
+    // 查询最新一条数据
     @GetMapping("/latest")
     public MonitoringData getLatest() {
         return monitoringDataMapper.selectLatest();
+    }
+
+    // 查询所有历史数据（按时间倒序）
+    @GetMapping("/list")
+    public List<MonitoringData> getList() {
+        return monitoringDataMapper.selectAll();
     }
 }

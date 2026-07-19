@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface MonitoringDataMapper {
 
@@ -17,7 +19,7 @@ public interface MonitoringDataMapper {
     @Select("SELECT * FROM t_monitoring_data ORDER BY create_time DESC LIMIT 1")
     MonitoringData selectLatest();
 
-    // 查询所有数据
+    // 查询所有数据（按时间倒序）
     @Select("SELECT * FROM t_monitoring_data ORDER BY create_time DESC")
-    java.util.List<MonitoringData> selectAll();
+    List<MonitoringData> selectAll();
 }
