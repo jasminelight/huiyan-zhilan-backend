@@ -22,4 +22,8 @@ public interface MonitoringDataMapper {
     // 查询所有数据（按时间倒序）
     @Select("SELECT * FROM t_monitoring_data ORDER BY create_time DESC")
     List<MonitoringData> selectAll();
+
+    // 分页查询（配合 PageHelper 使用）
+    @Select("SELECT * FROM t_monitoring_data ORDER BY create_time DESC")
+    List<MonitoringData> selectPage();
 }

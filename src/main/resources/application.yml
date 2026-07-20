@@ -13,3 +13,9 @@ mybatis:
 
 server:
   port: 8080
+
+# PageHelper 分页配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
