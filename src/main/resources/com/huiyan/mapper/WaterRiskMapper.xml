@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huiyan.mapper.WaterRiskMapper">
+    <resultMap id="BaseResultMap" type="com.huiyan.entity.WaterRisk">
+        <id column="id" property="id"/>
+        <result column="point_id" property="pointId"/>
+        <result column="water_depth" property="waterDepth"/>
+        <result column="risk_level" property="riskLevel"/>
+        <result column="risk_time" property="riskTime"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select * from waterrisk
+    </select>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        select * from waterrisk where id = #{id}
+    </select>
+
+    <insert id="insert">
+        insert into waterrisk(point_id,water_depth,risk_level,risk_time)
+        values(#{pointId},#{waterDepth},#{riskLevel},#{riskTime})
+    </insert>
+
+    <update id="update">
+        update waterrisk set
+        point_id=#{pointId},
+        water_depth=#{waterDepth},
+        risk_level=#{riskLevel},
+        risk_time=#{riskTime}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteById">
+        delete from waterrisk where id=#{id}
+    </delete>
+
+    <select id="selectRiskByLevel" resultType="com.huiyan.vo.RiskPointVO">
+        SELECT w.*, mp.area_name, mp.point_name, mp.device_no
+        FROM waterrisk w
+        LEFT JOIN monitor_point mp ON w.point_id = mp.id
+        WHERE w.risk_level = #{riskLevel}
+    </select>
+</mapper>

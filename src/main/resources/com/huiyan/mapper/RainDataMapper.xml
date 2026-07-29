@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huiyan.mapper.RainDataMapper">
+    <resultMap id="BaseResultMap" type="com.huiyan.entity.RainData">
+        <id column="id" property="id"/>
+        <result column="point_id" property="pointId"/>
+        <result column="rain_amount" property="rainAmount"/>
+        <result column="record_time" property="recordTime"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select * from rain_data
+    </select>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        select * from rain_data where id = #{id}
+    </select>
+
+    <insert id="insert">
+        insert into rain_data(point_id,rain_amount,record_time)
+        values(#{pointId},#{rainAmount},#{recordTime})
+    </insert>
+
+    <update id="update">
+        update rain_data set
+        point_id=#{pointId},
+        rain_amount=#{rainAmount},
+        record_time=#{recordTime}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteById">
+        delete from rain_data where id=#{id}
+    </delete>
+
+    <select id="sumRainByPointId" resultType="java.lang.Double">
+        SELECT COALESCE(SUM(rain_amount),0) FROM rain_data WHERE point_id = #{pointId}
+    </select>
+</mapper>
