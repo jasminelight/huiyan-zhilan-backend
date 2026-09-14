@@ -6,6 +6,7 @@ import com.huiyan.vo.PointRainVO;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import com.huiyan.vo.ApiResponse;
 
 @RestController
 @RequestMapping("/api/point")
@@ -15,8 +16,8 @@ public class MonitorPointController {
     private MonitorPointService monitorPointService;
 
     @GetMapping("/list")
-    public List<MonitorPoint> list() {
-        return monitorPointService.findAll();
+    public ApiResponse<List<MonitorPoint>> list() {
+        return ApiResponse.success(monitorPointService.findAll());
     }
 
     @GetMapping("/{id}")
