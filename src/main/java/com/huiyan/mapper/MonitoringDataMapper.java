@@ -4,6 +4,7 @@ import com.huiyan.entity.MonitoringData;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Options;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ public interface MonitoringDataMapper {
     // 插入数据
     @Insert("INSERT INTO t_monitoring_data(device_id, water_level, rainfall, temperature, humidity, image_url) " +
             "VALUES(#{deviceId}, #{waterLevel}, #{rainfall}, #{temperature}, #{humidity}, #{imageUrl})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
     int insert(MonitoringData data);
 
     // 查询最新一条数据

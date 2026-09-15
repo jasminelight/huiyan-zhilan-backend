@@ -7,9 +7,18 @@ import java.time.LocalDateTime;
 public class Warning {
     private Long id;
     private String deviceId;
+    private Long monitoringDataId;
     private Double waterLevel;
-    private Integer warningLevel;  // 1=警示，2=危险
+    private Double rainfall;
+    private String warningType;
+    private Integer warningLevel;
     private String warningDesc;
     private Boolean isSent;
+    private String status;
+    private String pushChannels;
+    private LocalDateTime pushedTime;
+    private String handledBy;
+    private String handleRemark;
+    private LocalDateTime handledTime;
     private LocalDateTime createTime;
 }
