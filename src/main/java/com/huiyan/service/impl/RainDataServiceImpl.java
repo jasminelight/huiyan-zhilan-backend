@@ -5,6 +5,7 @@ import com.huiyan.mapper.RainDataMapper;
 import com.huiyan.service.RainDataService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -39,7 +40,7 @@ public class RainDataServiceImpl implements RainDataService {
     }
 
     @Override
-    public Double sumRainByPointId(Long pointId) {
+    public Double sumRainByPointId(String pointId) {
         return rainDataMapper.sumRainByPointId(pointId);
     }
 }

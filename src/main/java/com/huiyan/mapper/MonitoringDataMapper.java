@@ -4,7 +4,9 @@ import com.huiyan.entity.MonitoringData;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +14,9 @@ import java.util.Map;
 @Mapper
 public interface MonitoringDataMapper {
 
+    /**
+     * 插入监测数据
+     */
     @Insert("""
             INSERT INTO t_monitoring_data
             (device_id, water_level, rainfall, temperature, humidity, image_url)
@@ -21,6 +26,10 @@ public interface MonitoringDataMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insert(MonitoringData data);
 
+
+    /**
+     * 查询最新一条监测数据
+     */
     @Select("""
             SELECT *
             FROM t_monitoring_data
@@ -29,6 +38,10 @@ public interface MonitoringDataMapper {
             """)
     MonitoringData selectLatest();
 
+
+    /**
+     * 查询所有监测数据（按时间倒序）
+     */
     @Select("""
             SELECT *
             FROM t_monitoring_data
@@ -36,12 +49,18 @@ public interface MonitoringDataMapper {
             """)
     List<MonitoringData> selectAll();
 
+
+    /**
+     * 分页查询监测数据
+     * 配合 PageHelper 使用
+     */
     @Select("""
             SELECT *
             FROM t_monitoring_data
             ORDER BY create_time DESC
             """)
     List<MonitoringData> selectPage();
+
 
     /**
      * 查询指定设备的小时雨量
@@ -56,7 +75,10 @@ public interface MonitoringDataMapper {
             GROUP BY DATE_FORMAT(create_time, '%Y-%m-%d %H:00:00')
             ORDER BY time ASC
             """)
-    List<Map<String, Object>> selectHourlyRainfall(String deviceId);
+    List<Map<String, Object>> selectHourlyRainfall(
+            String deviceId
+    );
+
 
     /**
      * 查询指定设备的日雨量
@@ -71,7 +93,10 @@ public interface MonitoringDataMapper {
             GROUP BY DATE_FORMAT(create_time, '%Y-%m-%d')
             ORDER BY time ASC
             """)
-    List<Map<String, Object>> selectDailyRainfall(String deviceId);
+    List<Map<String, Object>> selectDailyRainfall(
+            String deviceId
+    );
+
 
     /**
      * 查询指定设备的水位变化趋势
@@ -85,5 +110,34 @@ public interface MonitoringDataMapper {
               AND water_level IS NOT NULL
             ORDER BY create_time ASC
             """)
-    List<Map<String, Object>> selectWaterLevelTrend(String deviceId);
+    List<Map<String, Object>> selectWaterLevelTrend(
+            String deviceId
+    );
+
+
+    /**
+     * 更新监测数据的图片地址
+     */
+    @Update("""
+            UPDATE t_monitoring_data
+            SET image_url = #{imageUrl}
+            WHERE id = #{id}
+            """)
+    int updateImageUrl(
+            @Param("id") Long id,
+            @Param("imageUrl") String imageUrl
+    );
+
+
+    /**
+     * 根据监测数据ID查询图片地址
+     */
+    @Select("""
+            SELECT image_url
+            FROM t_monitoring_data
+            WHERE id = #{id}
+            """)
+    String selectImageUrlById(
+            @Param("id") Long id
+    );
 }

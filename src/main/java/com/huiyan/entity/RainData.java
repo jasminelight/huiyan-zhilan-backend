@@ -1,19 +1,27 @@
 package com.huiyan.entity;
 
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
+@Data
 public class RainData {
-    private Long id;
-    private Long pointId;
-    private Double rainAmount;
-    private LocalDateTime recordTime;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public Long getPointId() { return pointId; }
-    public void setPointId(Long pointId) { this.pointId = pointId; }
-    public Double getRainAmount() { return rainAmount; }
-    public void setRainAmount(Double rainAmount) { this.rainAmount = rainAmount; }
-    public LocalDateTime getRecordTime() { return recordTime; }
-    public void setRecordTime(LocalDateTime recordTime) { this.recordTime = recordTime; }
+    private Long id;
+
+    /**
+     * 监测点/设备ID
+     * 例如：pi-water-01
+     */
+    private String pointId;
+
+    /**
+     * 雨量
+     */
+    private Double rainAmount;
+
+    /**
+     * 记录时间
+     */
+    private LocalDateTime recordTime;
 }

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.huiyan.mapper.RainDataMapper">
+
     <resultMap id="BaseResultMap" type="com.huiyan.entity.RainData">
         <id column="id" property="id"/>
         <result column="point_id" property="pointId"/>
@@ -10,31 +12,59 @@
     </resultMap>
 
     <select id="selectAll" resultMap="BaseResultMap">
-        select * from rain_data
+        SELECT
+            id,
+            device_id AS point_id,
+            rainfall AS rain_amount,
+            create_time AS record_time
+        FROM t_monitoring_data
+        WHERE rainfall IS NOT NULL
+        ORDER BY create_time DESC
     </select>
 
     <select id="selectById" resultMap="BaseResultMap">
-        select * from rain_data where id = #{id}
+        SELECT
+            id,
+            device_id AS point_id,
+            rainfall AS rain_amount,
+            create_time AS record_time
+        FROM t_monitoring_data
+        WHERE id = #{id}
     </select>
 
     <insert id="insert">
-        insert into rain_data(point_id,rain_amount,record_time)
-        values(#{pointId},#{rainAmount},#{recordTime})
+        INSERT INTO t_monitoring_data
+        (
+            device_id,
+            rainfall,
+            create_time
+        )
+        VALUES
+            (
+                #{pointId},
+                #{rainAmount},
+                #{recordTime}
+            )
     </insert>
 
     <update id="update">
-        update rain_data set
-        point_id=#{pointId},
-        rain_amount=#{rainAmount},
-        record_time=#{recordTime}
-        where id=#{id}
+        UPDATE t_monitoring_data
+        SET
+            device_id = #{pointId},
+            rainfall = #{rainAmount},
+            create_time = #{recordTime}
+        WHERE id = #{id}
     </update>
 
     <delete id="deleteById">
-        delete from rain_data where id=#{id}
+        DELETE FROM t_monitoring_data
+        WHERE id = #{id}
     </delete>
 
     <select id="sumRainByPointId" resultType="java.lang.Double">
-        SELECT COALESCE(SUM(rain_amount),0) FROM rain_data WHERE point_id = #{pointId}
+        SELECT COALESCE(SUM(rainfall), 0)
+        FROM t_monitoring_data
+        WHERE device_id = #{pointId}
     </select>
+
 </mapper>

@@ -18,3 +18,7 @@ pagehelper:
   helper-dialect: mysql
   reasonable: true
   support-methods-arguments: true
+
+# YOLO Python 服务配置
+yolo:
+  service-url: http://localhost:5000
